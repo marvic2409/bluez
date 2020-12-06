@@ -39,7 +39,7 @@
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <sys/wait.h>
-
+#include <time.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
@@ -221,6 +221,9 @@ static int release_all(int ctl)
 static void run_cmdline(struct pollfd *p, sigset_t *sigs, char *devname,
 			int argc, char **argv)
 {
+	struct timespec tim, tim2;
+   	tim.tv_sec = 1;
+  	tim.tv_nsec = 2000000
 	int i;
 	pid_t pid;
 	char **cmdargv;
@@ -250,7 +253,7 @@ static void run_cmdline(struct pollfd *p, sigset_t *sigs, char *devname,
 			int status;
 			pid_t child;
 			struct timespec ts;
-
+			nanosleep(&tim , &tim2);
 			child = waitpid(-1, &status, WNOHANG);
 			if (child == pid || (child < 0 && errno != EAGAIN))
 				break;
